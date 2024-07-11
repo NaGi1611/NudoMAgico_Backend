@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="row pt-4">
+        <div class="col">
+            <h1 class="text-center"> Listado de Productos</h1>
+        </div>
+    </div>
+
+    <form class="row  m-4" role="search" method="get" action="/listado/">
+        <input class="col form-control ms-3" type="search" placeholder="id..." aria-label="Search" id="id_produc" name="id">
+        <button class="col btn btn-primary" type="submit">Buscar</button>
+        <div class="col-4"></div>
+        <a href="/produc/alta/" class="col-3 btn btn-success me-3">Agregar Producto</a>
+    </form>
+
+    <div class="row" >
+        <div class="col">
+            <table class="table table-hover table-striped table-bordered table-light">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Cantidad disponible</th>
+                        <th>Precio</th>
+                        <th>Imagen</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data}}
+                    <tr>
+                    <td>{{id_prod}}</td>
+                    <td>{{Nombre}}</td>
+                    <td>{{Descripcion}}</td>
+                    <td>{{Cant_disponible}}</td>
+                    <td>{{Precio}}</td>
+                    <td style="width: 30%;"><img src='{{Imagen}}' style="100%; height=22vh"></td>
+                    <td> <a href="/produc/modificar/{{id_prod}}" class="btn btn-primary"> Editar </a></td>
+                    <td> <a href="" class="btn btn-danger"> Eliminar </a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

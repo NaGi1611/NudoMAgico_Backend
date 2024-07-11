@@ -1,0 +1,56 @@
+<body>
+    <header>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/acerca">Acerca de</a>
+            <a href="/produc">Productos</a>
+            <a href="/contactos"> Contactos </a>
+            <a href="/produc/listado"> Administrador </a>
+        </nav>
+		<img src="../images/icono.jpeg" class="logo">
+		<section class="textos-header">
+            <h1>Trabajos Realizados</h1>
+            <h2>Diseños 100% hechos a mano y personalizados</h2>
+        </section>
+	</header>
+    <div class="Contenedor">
+				<div class="count-products">
+					<span id="contador-productos">0</span>
+                    <img src="../images/carrito.png" class="ico-car">
+				</div>
+		</header>
+		{{#each data}}
+        <div class="container-items">
+			<div class="item">
+				<figure>
+					<img src={{Imagen}} alt="producto"/>
+				</figure>
+				<div class="info-product">
+					<h2> {{Nombre}}</h2>
+					<h4>{{Descripcion}}</h4>
+					<p class="price"></p>${{Precio}}</p>
+					<button>Añadir al carrito</button>
+				</div>
+		</div>			
+        {{/each}}
+
+        <footer>
+            <div class="contenedor-pie">
+                <div class="content-pie">
+                    <h4>Teléfono</h4>
+                    <p>3436117314</p>
+                </div>
+                <div class="content-pie">
+                    <h4>Email</h4>
+                    <p>miri_2404@hotmail.com</p>
+                </div>
+                    <div class="content-pie">
+                        <h4>Ubicación</h4>
+                        <p>Paraná - Entre Ríos</p>
+                    </div>
+                </div>
+            </div>
+            <h2 class="titulo-final">&copy; NaGhi Design | Ellenberger, Gisela N. 2024</h2>
+    
+        </footer>
+	</body>
