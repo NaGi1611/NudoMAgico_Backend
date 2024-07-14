@@ -20,19 +20,27 @@
       <h2>Contame tu idea y la hacemos realidad!</h2>
       </span>
     </div>
-      <form action="" class="contact" method="POST">
+    <form action="/contactos/procesar-email" class="contact" method="post" enctype="multipart/form-data">
       <label for="nombre">Nombre</label>
       <input type="text" name="nombre" id="nombre">
 
       <label for="correo">Correo</label>
-      <input type="text" name="correo" id="correo">
+      <input type="email" name="correo" id="correo">
 
       <label for="telefono">Celular</label>
-      <input type="text" name="celular" id="celular">
+      <input type="text" name="telefono" id="telefono">
 
-      <label for="mensaje">Mensaje</label>
+      <label for="mensaje"> Mensaje </label>
       <textarea name="mensaje" id="mensaje"></textarea>
+
+      <div class="form-group mb-4">
+        <label for="fileAdjunto"> Adjuntar ideas</label> 
+        <input type="file" name="fileAdjunto" class="form-control-file" />
+      </div>
+
+      <div class="d-grid gap-2 col-6 mx-auto">
       <input type="submit" value="Enviar">
+      </div>
     </form>
   </section>
   <section class="whatsapp">

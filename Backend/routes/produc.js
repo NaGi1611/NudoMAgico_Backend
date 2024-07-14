@@ -26,13 +26,13 @@ router.get('/listado/', function(req, res, next) {
 
 });
 
-/* Dashboard de Productos */
+/* Barra de busqueda */
 router.get('/listado/', function(req, res, next) {
 
   if(req.query.id_prod){
-      sentencia = 'select * from productos where id_prod = ' +  req.query.id_prod
+      sentencia = "select * from productos where id_prod = " +  req.query.id_prod;
   } else {
-    sentencia = 'select * from productos' 
+    sentencia = "select * from productos";
   }
 
   connection.query(sentencia, function (error, results, fields) {
@@ -70,27 +70,29 @@ router.get('/modificar/:id_prod', function(req, res, next) {
   });
 });
 
-router.post('/modificar/:id_prod', upload.single("imagen"), async function(req, res, next) {
+router.post('/modificar/:id_prod', upload.single('imagen'), async function (req, res, next){
 
   let sentencia;
 
   if (req.file){
-    sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}',  imagen = '/images/${req.file.originalname}' 
+    sentencia =  `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cant_disponible  = '${req.body.cant_disponible}', precio  = '${req.body.precio}', imagen = '/images/${req.file.originalname}' 
      where id_prod = ${req.params.id_prod} `
 
      fs.createReadStream("./uploads/" + req.file.filename).pipe(fs.createWriteStream("./public/images/" + req.file.originalname), function(error){})
-  }
-    else {
-      sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}', where id_prod = ${req.params.id_prod}` 
+
+  } else {
+    sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cant_disponible  = '${req.body.cant_disponible}', precio  = '${req.body.precio}' where id_prod = ${req.params.id_prod}` 
   }  
   
    connection.query(sentencia, function (error, results, fields) {
     if (error) throw error;
-    //res.json({data: results});  
+  //res.json({data: results});  
     res.render('finalizado', {mensaje: "El producto fue modificado correctamente"});
   });
 
-});
+})
+
+
 
 /*Eliminar Productos. */
 router.get('/eliminar/:id_prod', function(req, res, next) {
