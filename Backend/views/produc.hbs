@@ -19,21 +19,25 @@
                     <img src="../images/carrito.png" class="ico-car">
 				</div>
 		</header>
-		{{#each data}}
-        <div class="container-items">
-			<div class="item">
+           	
+        <div class="row justify-content-center ">
+			{{#each data}} 
+            <div class="col-12 col-lg-5 d-flex justify-content-start m-4">	
 				<figure>
-					<img src={{imagen}} alt="producto"/>
+					<img src="{{imagen}}" width="250" height="250" alt="producto"/>
 				</figure>
 				<div class="info-product">
-					<h2> {{nombre}}</h2>
-					<h4>{{descripcion}}</h4>
+					<h4> {{nombre}}</h4>
+					<h6>{{descripcion}}</h6>
 					<p class="price"></p>${{precio}}</p>
 					<button>Añadir al carrito</button>
 				</div>
-		</div>			
-        {{/each}}
-
+              
+            </div> 
+            {{/each}}  
+		</div>			         
+    </div>
+    
     <footer>
         <div class="contenedor-pie">
             <div class="content-pie">
