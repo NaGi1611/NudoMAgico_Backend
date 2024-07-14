@@ -14,13 +14,6 @@ router.get('/', function(req, res, next) {
       });
 });
 
-/* GET pagina de contactos. */
-router.get('/contactos', function(req, res, next) {
-  connection.query( function (error, results, fields) {
-      if (error) throw error;
-      res.render('contactos', {data:results});
-    });
-});
 
 /* GET listado de productos. */
 router.get('/listado/', function(req, res, next) {
@@ -113,7 +106,7 @@ router.post('/eliminar/:id_prod', upload.single("imagen"), async function(req, r
   connection.query('delete from productos where id_prod = '+ req.params.id_prod, function (error, results, fields) {
     
     if (error) throw error;
-    res.render('finalizado', {mensaje: "E producto fue eliminado correctamente"});
+    res.render('finalizado', {mensaje: "El producto fue eliminado correctamente"});
   });
 
 });
