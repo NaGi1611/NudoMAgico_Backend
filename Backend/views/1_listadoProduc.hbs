@@ -32,13 +32,13 @@
                     {{#each data}}
                     <tr>
                     <td>{{id_prod}}</td>
-                    <td>{{Nombre}}</td>
-                    <td>{{Descripcion}}</td>
-                    <td>{{Cant_disponible}}</td>
-                    <td>{{Precio}}</td>
-                    <td style="width: 30%;"><img src='{{Imagen}}' style="100%; height=22vh"></td>
+                    <td>{{nombre}}</td>
+                    <td>{{descripcion}}</td>
+                    <td>{{cant_disponible}}</td>
+                    <td>{{precio}}</td>
+                    <td style="width: 12%;"><img src='{{imagen}}' style="100%; height=22vh"></td>
                     <td> <a href="/produc/modificar/{{id_prod}}" class="btn btn-primary"> Editar </a></td>
-                    <td> <a href="" class="btn btn-danger"> Eliminar </a></td>
+                    <td> <a href="/produc/eliminar/{{id_prod}}" class="btn btn-danger"> Eliminar </a></td>
                     </tr>
                     {{/each}}
                 </tbody>

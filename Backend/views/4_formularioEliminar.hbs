@@ -8,43 +8,37 @@
            {{#each data}}
           
 
-             <form action="/produc/eliminar/{{id_produc}}" method="post" enctype="multipart/form-data">
+             <form action="/produc/eliminar/{{id_prod}}" method="post" enctype="multipart/form-data">
                 <div class="form-group my-3">
                     <label for="formGroupExampleInput">Nombre</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ingrese nombre del producto" name="nombre" value="{{Nombre}}" disabled>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ingrese nombre del producto" name="nombre" value="{{nombre}}" disabled>
                 </div>
                 <div class="form-group my-3">
                     <label for="formGroupExampleInput2">Descripción</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ingrese detalles" name="descripcion"  value="{{Descripcion}}" disabled>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ingrese detalles" name="descripcion"  value="{{descripcion}}" disabled>
                 </div>
                 <div class="form-group">
                     <label for="formGroupExampleInput3">Cant_disponible</label>
-                    <input type="number" class="form-control" id="formGroupExampleInput3" placeholder="Cantidad dispobible" name="canti" value="{{Canti_disponible}}" disabled>
+                    <input type="number" class="form-control" id="formGroupExampleInput3" placeholder="Cantidad dispobible" name="cant_disponible" value="{{cant_disponible}}" disabled>
                 </div>
                 <div class="form-group">
                     <label for="formGroupExampleInput3">Precio</label>
-                    <input type="number" class="form-control" id="formGroupExampleInput3" placeholder="Precio" name="precio" value="{{Precio}}" disabled>
+                    <input type="number" class="form-control" id="formGroupExampleInput4" placeholder="Precio" name="precio" value="{{precio}}" disabled>
                 </div>
                 <div class="form-group my-3">
                     <label for="exampleFormControlFile1">Imagen</label>
                     <input type="file" class="form-control" id="exampleFormControlFile1" name="imagen" disabled>
-                    <label for="" class="text-white mt-2">{{Imagen}}</label>
-
-                    <img src="{{Imagen}}" class="mt-2" style="width: 100%;" alt="" >
-
+                    <label for="" class="text-white mt-2">{{imagen}}</label>
+                    <img src="{{imagen}}" class="mt-2" style="width: 100%;" alt="" >
                 </div>
 
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button type="submit" class="btn btn-secondary btn-block mt-5">Eliminar</button>
-
-                    <a href="/produc/listado" class="btn btn-secondary btn-block mt-4 mb-4">Retornar</a>
+                    <a href="/produc/listado/" class="btn btn-secondary btn-block mt-4 mb-4">Retornar</a>
                 </div>
             </form>   
 
             {{/each}}  
-
-
-
 
         </div>
     </div>

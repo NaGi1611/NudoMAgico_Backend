@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET pagina de contactos. */
-router.get('/contacto/', function(req, res, next) {
+router.get('/contactos', function(req, res, next) {
   connection.query( function (error, results, fields) {
       if (error) throw error;
       res.render('contactos', {data:results});
@@ -40,11 +40,12 @@ router.get('/listado/', function(req, res, next) {
 /* Carga de Productos. */
 router.get('/alta', function(req, res, next) {
       res.render('2_formularioAlta')
+      res.json({data: results});  
 });
 
 router.post('/alta', upload.single("imagen"), async function(req, res, next) {
 
-let sentencia = 'insert into productos (Nombre, Descripcion, Cant_disponible, Precio, Imagen) values("' + req.body.nombre + '","' + req.body.descripcion + '","' + req.body.cant_disponible + '","' + req.body.precio + '","/images/' + req.file.originalname + '")'
+let sentencia = 'insert into productos (nombre, descripcion, cant_disponible, precio, imagen) values("' + req.body.nombre + '","' + req.body.descripcion + '","' + req.body.cant_disponible + '","' + req.body.precio + '","/images/' + req.file.originalname + '")'
 let results = await connection.query(sentencia)    
 
 fs.createReadStream("./uploads/" + req.file.filename).pipe(fs.createWriteStream("./public/images/" + req.file.originalname), function(error){})
@@ -53,8 +54,8 @@ res.render("finalizado", {mensaje: "Producto cargado exitosamente"})
 });
 
 /* Modificacion de Productos. */
-router.get('/produc/modificar/:id', function(req, res, next) {
-  connection.query('select * from productos where id = '+ req.params.id, function (error, results, fields) {
+router.get('/modificar/:id_prod', function(req, res, next) {
+  connection.query('select * from productos where id_prod = '+ req.params.id_prod, function (error, results, fields) {
    
     if (error) throw error;
     //res.json({data: results});  
@@ -62,18 +63,18 @@ router.get('/produc/modificar/:id', function(req, res, next) {
   });
 });
 
-router.post('/modificar'), upload.single("imagen"), async function(req, res, next) {
+router.post('/modificar/:id_prod'), upload.single("imagen"), async function(req, res, next) {
 
   let sentancia;
 
   if (req.file){
     sentancia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}',  imagen = '/images/${req.file.originalname}' 
-     where id = ${req.params.id} `
+     where id = ${req.params.id_prod} `
 
      fs.createReadStream("./uploads/" + req.file.filename).pipe(fs.createWriteStream("./public/images/" + req.file.originalname), function(error){})
   }
     else {
-      sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}', where id = ${req.params.id}` 
+      sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}', where id = ${req.params.id_prod}` 
   }  
   
    connection.query(sentencia, function (error, results, fields) {
@@ -85,20 +86,19 @@ router.post('/modificar'), upload.single("imagen"), async function(req, res, nex
 };
 
 /*Eliminar Productos. */
-router.get('/produc/eliminar/:id', function(req, res, next) {
-  connection.query('select * from productos where id = '+ req.params.id, function (error, results, fields) {
+router.get('/eliminar/:id_prod', function(req, res, next) {
+  connection.query('select * from productos where id_prod = '+ req.params.id_prod, function (error, results, fields) {
     if (error) throw error;
     //res.json({data: results});  
     res.render('4_formularioEliminar', {data:results});
   });
 });
 
-router.post('/eliminar/:id'), upload.single("imagen"), async function(req, res, next) {
+router.post('/eliminar/:id_prod'), upload.single("imagen"), async function(req, res, next) {
 
-  connection.query('delete from productos where id = '+ req.params.id, function (error, results, fields) {
+  connection.query('delete from productos where id_prod = '+ req.params.id_prod, function (error, results, fields) {
     
     if (error) throw error;
-    //res.json({data: results});  
     res.render('finalizado', {mensaje: "E producto fue eliminado correctamente"});
   });
 
