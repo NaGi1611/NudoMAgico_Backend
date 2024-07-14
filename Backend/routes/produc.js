@@ -4,16 +4,12 @@ const multer =require('multer');
 const upload =multer({dest:'uploads/'});
 const fs = require('fs');
 const connection = require("./../bbdd");
-var mysql      = require('mysql');
-
 
  
 /* GET pagina de productos. */
 router.get('/', function(req, res, next) {
     connection.query('select * from productos', function (error, results, fields) {
         if (error) throw error;
-        //res.json({data: results});  
-        //console.log(results)
         res.render('produc', {data:results});
       });
 });
@@ -36,6 +32,24 @@ router.get('/listado/', function(req, res, next) {
     });
 
 });
+
+/* Dashboard de Productos */
+router.get('/listado/', function(req, res, next) {
+
+  if(req.query.id_prod){
+      sentencia = 'select * from productos where id_prod = ' +  req.query.id_prod
+  } else {
+    sentencia = 'select * from productos' 
+  }
+
+  connection.query(sentencia, function (error, results, fields) {
+
+      if (error) throw error;
+      // res.json({data: results})
+      res.render('1_listadoProduc', {data:results});
+    });
+  });
+
 
 /* Carga de Productos. */
 router.get('/alta', function(req, res, next) {
@@ -63,27 +77,27 @@ router.get('/modificar/:id_prod', function(req, res, next) {
   });
 });
 
-router.post('/modificar/:id_prod'), upload.single("imagen"), async function(req, res, next) {
+router.post('/modificar/:id_prod', upload.single("imagen"), async function(req, res, next) {
 
-  let sentancia;
+  let sentencia;
 
   if (req.file){
-    sentancia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}',  imagen = '/images/${req.file.originalname}' 
-     where id = ${req.params.id_prod} `
+    sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}',  imagen = '/images/${req.file.originalname}' 
+     where id_prod = ${req.params.id_prod} `
 
      fs.createReadStream("./uploads/" + req.file.filename).pipe(fs.createWriteStream("./public/images/" + req.file.originalname), function(error){})
   }
     else {
-      sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}', where id = ${req.params.id_prod}` 
+      sentencia = `update productos set nombre  = '${req.body.nombre}', descripcion  = '${req.body.descripcion}', cantidad = '${req.body.cant_disponible}', precio = '${req.body.precio}', where id_prod = ${req.params.id_prod}` 
   }  
   
    connection.query(sentencia, function (error, results, fields) {
     if (error) throw error;
     //res.json({data: results});  
-    res.render('finalizado', {mensaje: "E producto fue modificado correctamente"});
+    res.render('finalizado', {mensaje: "El producto fue modificado correctamente"});
   });
 
-};
+});
 
 /*Eliminar Productos. */
 router.get('/eliminar/:id_prod', function(req, res, next) {
@@ -94,7 +108,7 @@ router.get('/eliminar/:id_prod', function(req, res, next) {
   });
 });
 
-router.post('/eliminar/:id_prod'), upload.single("imagen"), async function(req, res, next) {
+router.post('/eliminar/:id_prod', upload.single("imagen"), async function(req, res, next) {
 
   connection.query('delete from productos where id_prod = '+ req.params.id_prod, function (error, results, fields) {
     
@@ -102,6 +116,6 @@ router.post('/eliminar/:id_prod'), upload.single("imagen"), async function(req, 
     res.render('finalizado', {mensaje: "E producto fue eliminado correctamente"});
   });
 
-};
+});
 
 module.exports = router;
