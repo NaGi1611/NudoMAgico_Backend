@@ -38,8 +38,8 @@ router.get('/listado/', function(req, res, next) {
   connection.query(sentencia, function (error, results, fields) {
 
       if (error) throw error;
-      res.json({data: results})
-     // res.render('1_listadoProduc', {data:results});
+      //res.json({data: results})
+      res.render('1_listadoProduc');
     });
   });
 

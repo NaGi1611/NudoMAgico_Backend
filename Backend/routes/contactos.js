@@ -5,16 +5,18 @@ const multer = require("multer");
 const nodemailer = require("nodemailer");
 const app = express();
 const path = require("path");
+const bodyParser = require('body-parser');
+
+
 
 /* GET pagina de contactos. */
-router.get('/', function(req, res, next) {
+app.get('/', function(req, res, next) {
   connection.query('select * from productos', function (error, results, fields) {
       if (error) throw error;
       res.render('contactos');
     });
 });
 
-module.exports = router;
 
 // Configuración de multer
 const storage = multer.diskStorage({
@@ -37,8 +39,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.post("contactos/procesar-email", upload.single("fileAdjunto"), (req, res) => {
-  const { desde, para, titulo, telefono, mensaje } = req.body;
+app.post("/procesar-email", upload.single("fileAdjunto"), (req, res) => {
+  const { correo, nombre, titulo, mensaje } = req.body;
   const fileAdjunto = req.file;
 
   // Verificar si se adjuntó un archivo
@@ -55,29 +57,24 @@ app.post("contactos/procesar-email", upload.single("fileAdjunto"), (req, res) =>
     ];
   }
 
-  // Definir el contenido del cuerpo para el correo electrónico que deseas enviar
+  // Definir el contenido del cuepro para el correo electrónico que deseas enviar
   const mailOptions = {
-    from: desde,
+    from: correo,
+    nombre: nombre,
     to: "petty161188@gmail.com",
-    subject: titulo,
-    text: telefono,
+    subject: nombre + " Mensaje enviado desde la página Nudo Mágico",
     text: mensaje,
     attachments: attachments,
   };
+  
   // Envía el correo electrónico utilizando el método sendMail del objeto transporter
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log("Error al enviar el correo:", error);
+      res.render("Error al enviar el correo:", error);
     } else {
-      console.log("Correo enviado:", info.response);
+      res.render("mensajeEnviado", {mensaje: "Mensaje enviado exitosamente"})
     }
   });
-
-  res.render("index");
 });
 
-/* Iniciar el servidor con Express
-const PORT = process.env.PORT || 3500;
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
-}); */
+module.exports = app;
